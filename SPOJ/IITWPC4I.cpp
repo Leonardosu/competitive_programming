@@ -91,7 +91,7 @@ int main()
 		{
 			cin>>a>>b>>c;
 			input.pb(mp(c,mp(a,b)));
-		}
+		}	
 
 		sort(all(input));
 
