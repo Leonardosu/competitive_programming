@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 #define f first
-#define s second
+// #define s second
 #define pb push_back
 #define mp make_pair
-#define all(x) x.begin(),x.end();
+#define all(x) x.begin(),x.end()
 using namespace std;
 const int N = 1e5;
 const int INF = 1e9;
@@ -12,8 +12,8 @@ typedef long long int ll;
 typedef pair<int,int> ii;
 
 int t;
-ll a,b,ans;
-ll n,m;
+ll a,b,p,ans,now;
+int n;
 
 int main()
 {
@@ -22,11 +22,27 @@ int main()
 	cin>>t;
 	while(t--)
 	{
-		cin>>n>>m>>a>>b;
-		
-		ans = (a-1)*(b-1);
-		ans = max({n*(b),m*(a),n*(m - b - 1LL),m*(n - a - 1LL)});
-		
-		cout<<ans<<"\n";
+		string s;
+
+		cin>>a>>b>>p;
+		cin>>s;
+
+		s = "!" + s;
+
+		n = s.size();
+		now = 0LL;
+		ans = n - 1;
+
+		for(int i=n-2;i>0;--i)
+		{
+			if(s[i] != s[i-1])
+			{
+				now += (s[i] == 'A') ? a : b;
+				if(now <= p)
+					ans = i;
+			}
+		}
+			
+		cout<<ans<<'\n';
 	}	
 }
