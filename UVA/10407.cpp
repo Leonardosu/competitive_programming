@@ -7,6 +7,7 @@ vector<ll> v;
 ll qnt,x;
 ll ans;
 bool stop = false;
+ll gcd (ll a, ll b) { while (b) { a %= b,swap(a, b);}return a;}
 
 int main()
 {
@@ -21,7 +22,7 @@ int main()
 			ans = abs(v[1] - v[0]);
 			int n = v.size();
 			for(int i=0;i<n-1;++i)
-				ans = __gcd(abs(v[i+1] - v[i]),ans);
+				ans = gcd(abs(v[i+1] - v[i]),ans);
 			cout<<ans<<"\n";
 			v.clear();
 		}
