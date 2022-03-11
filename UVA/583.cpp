@@ -27,46 +27,26 @@ int main()
 	while(cin>>n && n)
 	{
 		cout<<n<<" = ";
+
 		if(n < 0LL) 
-		{ 
-			
-			if(n == -1)
-			{
-				cout<<"-1 x \n";
-				continue;
-			}
-
-			cout<<"-1"; 
-			n*=-1; 
-
-			for(int pos=0;pos<cnt;++pos)
-			{
-				while(n%primos[pos] == 0)
-				{
-					cout<<" x "<<primos[pos];
-					n/=primos[pos];
-				}
-				if(n == 1) break;
-			}
-			if(n > 1) cout<<" x "<<n;
-			cout<<"\n";			
-		}
-
-		else
 		{
-			for(int pos=0;pos<cnt;++pos)
-			{
-				while(n%primos[pos] == 0)
-				{
-					cout<<primos[pos];
-					n/=primos[pos];
-					if(n == 1) break;
-					cout<<" x ";
-				}
-				if(n == 1) break;
-			}
-			if(n > 1) cout<<n;
-			cout<<"\n";
+			cout<<"-1 x "; 
+			n*=-1;
 		}
+		
+		for(int pos=0;pos<cnt;++pos)
+		{
+			while(n%primos[pos] == 0)
+			{
+				cout<<primos[pos];
+				n/=primos[pos];
+				if(n == 1) break;
+				cout<<" x ";
+			}
+			if(n == 1) break;
+		}
+
+		if(n > 1) cout<<n;
+		cout<<"\n";		
 	}
 }
