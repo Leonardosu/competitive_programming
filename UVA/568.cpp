@@ -32,12 +32,8 @@ int main()
 		while(c%2 == 0) c/=2,c2++;
 		while(c%5 == 0) c/=5,c5++;
 		ans*=c;
-		ans%=10;
-
-		if(c2 > c5)
-			now = (ans*poww(2,c2-c5))%10;
-		else
-			now = (ans*poww(5,c5-c2))%10;
+		ans%=10;	
+		now = (ans*poww(2,c2-c5))%10;		
 		f[i] = now;
 	}
 
