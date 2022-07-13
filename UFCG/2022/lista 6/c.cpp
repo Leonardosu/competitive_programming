@@ -10,82 +10,89 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
 
-ll gcd (ll a, ll b) { while (b) { a %= b,swap(a, b);}return a;}
-struct UnionFind {
-    vector<int> parent, level;
-    UnionFind(int numberNodes) {
-        parent.resize(numberNodes + 1);
-        level.resize(numberNodes + 1);
-        for(int i=0;i<=numberNodes;++i)
-            parent[i] = i, level[i] = 0;            
+int gcd(int a, int b) { while (b) { a %= b,swap(a, b);}return a;}
+int menor(int a, int b) {return min(a,b);}
+const int N = 2e5 + 7;
+int v[N];
+
+struct SparseTable{
+    vector<vector<int>> sp;
+    vector<int> val;
+    SparseTable(vector<int> &_a, int (*function)(int,int)){
+    	val = _a;
+
+        int n = val.size(), size = __lg(n) + 1;
+        sp.resize(n, vector<int>(size));
+
+        for (int i=n-1; i>=0; i--){
+            sp[i][0] = val[i];
+            for (int j=1; i+(1<<j)<=n; j++){
+                sp[i][j] = function(sp[i][j - 1], sp[i + (1 << j - 1)][j - 1]);
+            }
+        }
     }
-    int find(int x) {
-        if(parent[x] == x) return x;
-        return parent[x] = find(parent[x]);
-    }
-    void join(int x, int y) {
-        x = find(x);
-        y = find(y);
-        if(x == y) return;
-        if(level[x] < level[y]) swap(x,y);
-        if(level[x] == level[y]) level[x]++;
-        parent[y] = x;
+
+    int query(int l, int r, int (*function)(int,int)){
+        int k = __lg(r - l);
+        return function(sp[l][k], sp[r - (1 << k)][k]);
     }
 };
 
-struct SegmentTree {
-	int *st;
- 	int n;
-
-	SegmentTree(int arr[], int n_) {
-		n = n_;
-	   	int height = (int)(ceil(log2(n)));
-	   	int size = 2*(int)pow(2, height)-1;
-	   	st = new int[size];
-	   	build(0, arr, 0, n-1);
-	}
-
-	int build(int no, int arr[], int ss, int se) {
-	    if (ss==se) {
-	        st[no] = arr[ss];
-	        return st[no];
-	    }
-	    int mid = ss+(se-ss)/2;
-	    st[no] = gcd(build(no*2+1, arr, ss, mid),
-	                 build(no*2+2, arr, mid+1, se));
-	    return st[no];
-	}
-
-	int findGcd(int no, int ini, int fim, int L, int R) {
-	    if (ini>R || fim < L)
-	        return 0;
-	    if (L<=ini && R>=fim)
-	        return st[no];
-
-	    int mid = (fim+ini)/2;
-	    return gcd(findGcd(no*2+1, ini, mid, L, R),
-	               findGcd(no*2+2, mid+1, fim, L, R));
-	}
-	 
-	int query(int L, int R) {
-		assert(L<=R);
-		assert(L>=0 && L<=n-1);
-		assert(R>=0 && R<=n-1);
-	    return findGcd(0, 0, n-1, L, R);
-	}
-};
 
 void solve_task()
 {
 	int n, p;
 	cin>>n>>p;
 
-	int v[n];
-	for(int i=0;i<n;++i)
-		cin>>v[i];
+	vector<int> v(n);
+	for(int &x : v)
+		cin>>x;
 
-	SegmentTree st = SegmentTree(v, n);
-	cout<<st.query(0, n-1)<<"\n";
+	SparseTable sparseMin(v, &menor);
+    SparseTable sparseGcd(v, &gcd);
+	vector<int> qry[n];
+
+	for(int i=0;i<n;++i) {
+		//leftmost
+		int pos = i;
+		int l = -1, r = i;
+		while(l + 1< r) {
+			int mid = (l + r + 1) >> 1;
+			if(sparseMin.query(mid,  i + 1, &menor) != v[i] || sparseGcd.query(mid, i + 1, &gcd) != v[i])
+				l = mid;
+			else
+				r = mid, pos = mid;
+		}
+		qry[pos].pb(v[i]);
+
+		//rightmost
+		pos = i;
+		l = i, r = n ;
+		while(l + 1 < r) {
+			int mid = (l + r) >> 1;
+			if(sparseMin.query(i,  mid + 1, &menor) != v[i] || sparseGcd.query(i, mid + 1, &gcd) != v[i])
+				r = mid;
+			else
+				l = mid, pos = mid;
+		}
+		qry[pos].pb(-v[i]);
+	}
+
+	qry[0].pb(p);
+	qry[n-1].pb(-p);
+
+	ll ans = 0;	
+    multiset<int> st;
+    for (int i=0; i<n-1; i++){
+        for (auto x: qry[i]){
+            if (x > 0)
+                st.insert(x);
+            else
+                st.erase(st.find(-x));
+        }
+        ans += *st.begin();
+    }
+	cout<<ans<<"\n";
 }
 
 int main()
