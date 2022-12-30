@@ -10,10 +10,9 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
 
-struct pt{
+struct pt {
 	int x, y;
-	double len()
-	{
+	double len() {
 		return sqrt(x*x + y*y);
 	}
 };

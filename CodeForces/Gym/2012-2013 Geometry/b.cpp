@@ -16,17 +16,14 @@ typedef vector<int> vi;
 const double PI = acos(-1);
 double EPS = 1e-6;
 
-struct pt{
+struct pt {
 	int x, y;	
-
-	double norm()
-	{
+	double norm() {
 		return sqrt(x*x + y*y);
 	}
 };
 
-int dotProd(pt a, pt b)
-{
+int dotProd(pt a, pt b) {
 	return a.x*b.x + a.y*b.y;
 }
 

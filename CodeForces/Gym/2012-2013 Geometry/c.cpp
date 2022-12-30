@@ -14,12 +14,10 @@ struct pt{
 	ll x, y;	
 };
 
-double areaPolygon(vector<pt> &polygon)
-{
+double areaPolygon(vector<pt> &polygon) {
 	ll area = 0;
 	int j = polygon.size() - 1;
-	for(int i=0;i<(int)polygon.size();++i)
-	{
+	for(int i=0;i<(int)polygon.size();++i) {
 		area += (polygon[j].x + polygon[i].x) * (polygon[j].y - polygon[i].y);
 		j = i;
 	}
