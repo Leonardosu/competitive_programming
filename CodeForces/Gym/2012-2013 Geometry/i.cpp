@@ -35,7 +35,6 @@ double abs(pt p, pt q = pt()) { return hypot(p.x-q.x, p.y-q.y); }
 ll absLL(pt p, pt q) {return (p.x - q.x)*(p.x - q.x) + (p.y - q.y)*(p.y - q.y);}
 long double dist_pt_seg(pt p, pt a, pt b) {
     pt pp = a + project(p-a, b-a);
-    // cout<<pp.x<<" : "<<pp.y<<"\n";
     if(pp.between(a, b)) return abs(p, pp);
     return sqrt(min(absLL(p, a), absLL(p, b)));
 }
