@@ -22,10 +22,11 @@ int main()
 
     ld a,b,c,dist;
     cin>>a>>b>>c>>dist;
+    
     ld delta = dist * sqrt(a*a + b*b);
-
+    ld c1 = c + delta;
+    ld c2 = c - delta;
     cout<<fixed<<setprecision(12);
-    cout<<a<<" "<<b<<" "<<(delta - c)<<"\n";
-    cout<<a<<" "<<b<<" "<<(delta + c)<<"\n";
-    cout<<(1.0*delta)/sqrt(a*a + b*b);
+    cout<<a<<" "<<b<<" "<<c1<<"\n";
+    cout<<a<<" "<<b<<" "<<c2<<"\n";
 }
