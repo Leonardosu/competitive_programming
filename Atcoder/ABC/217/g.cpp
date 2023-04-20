@@ -11,34 +11,6 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
 
-void insert(int x) {
-	mutex.wait()
-	if(search(x))
-		doInsert(root, x)
-	mutex.signal()
-}
-
-void search(int x) {
-	mutex.wait()
-	if(search(x))
-	doSearch(root, x)
-	mutex.signal()
-}
-
-void doInsert(Node now, int x) {
-	if(now == None) {
-		now = new Node(x)
-	} else {
-		return doInsert((x < now.value ? now.left : now.right), x);
-	}
-}
-
-bool doSearch(Node now, int x) {
-	if(now == None) return false;
-	if(now.value == x) return true;
-	return doSearch((x < now.value ? now.left : now.right), x);
-}
-
 int main() {
     cin.tie(0)->sync_with_stdio(0);
 
