@@ -17,7 +17,6 @@ struct node {
 	node(){}
 };
 
-
 node* update(node *curr, int ini, int fim, int pos, int v) {
 	node *root = new node();
 

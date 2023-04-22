@@ -84,7 +84,6 @@ int main() {
         lastPos[x] = i--;
     }
 
-    // reverse(versoes.begin() + 1, versoes.end());
     for(int k=1;k<=n;++k) {
         int i = 1;
         int groups = 0;
