@@ -81,16 +81,6 @@ bool intersect(int i, int j, double mid) {
             azedou = true;
         }
 
-        if(c.y > b.y) {
-            i++;
-            continue;
-        }
-        if(a.y > d.y) {
-            j--;
-            if(j < 0) j += t2;
-            continue;
-        }
-
         if(seg_int(
             a, 
             b,
@@ -122,7 +112,6 @@ double getCost(int i, int j) {
             l = mid;
         }
     }  
-
     return r;
 }
 
